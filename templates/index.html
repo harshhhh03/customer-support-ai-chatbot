@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Support Bot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>🤖 Customer Support Bot</h2>
+        <p>AI-powered help for orders & refunds</p>
+    </div>
+
+    <div id="chat-box" class="chat-box"></div>
+
+    <div class="chat-input">
+        <input type="text" id="msg" placeholder="Type your issue..." />
+        <button onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<script>
+async function sendMessage() {
+    const input = document.getElementById("msg");
+    const message = input.value.trim();
+    if (!message) return;
+
+    const chatBox = document.getElementById("chat-box");
+
+    // USER MESSAGE
+    chatBox.innerHTML += `
+        <div class="chat-row user">
+            <div class="avatar">🧑</div>
+            <div class="bubble user-bubble">
+                ${message}
+            </div>
+        </div>
+    `;
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // SEND TO BACKEND
+    const res = await fetch(`/chat?message=${encodeURIComponent(message)}`, {
+        method: "POST"
+    });
+    const data = await res.json();
+
+    // BOT MESSAGE
+    chatBox.innerHTML += `
+        <div class="chat-row bot">
+            <div class="avatar">🤖</div>
+            <div class="bubble bot-bubble">
+                ${data.reply}
+                <div class="confidence">Confidence: ${data.confidence}</div>
+            </div>
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+</script>
+
+</body>
+</html>
