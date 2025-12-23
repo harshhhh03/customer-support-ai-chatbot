@@ -37,16 +37,12 @@ The chatbot uses a **hybrid approach (Rule-based + Machine Learning)** to unders
 customer-support-ai-chatbot/
 │
 ├── app.py # FastAPI application
-
 ├── train.py # ML training script
-
 ├── model.pkl # Trained ML model
-
 ├── vectorizer.pkl # TF-IDF vectorizer
-
 ├── requirements.txt
-
 ├── .gitignore
+├── README.md
 │
 ├── templates/
 │ └── index.html # Chat UI
@@ -56,9 +52,6 @@ customer-support-ai-chatbot/
 │
 ├── data/
 │ └── customer_support_tickets.csv
-│
-└── README.md
-
 ## 🧪 Model Details
 
 - **Features**:
